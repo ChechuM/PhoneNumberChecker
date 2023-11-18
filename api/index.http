@@ -1,0 +1,16 @@
+
+### Get list of supported countries
+GET http://localhost:3001/countries
+
+### Validate a phone number
+
+POST http://localhost:3001/phone
+Content-Type: application/json
+
+{
+    "number": "0404024308",
+    "code": "AU"
+}
+
+### Get CSV file
+GET http://localhost:3001/download/true/true/MOBILE/+61202024308
