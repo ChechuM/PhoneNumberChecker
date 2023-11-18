@@ -5,15 +5,26 @@ const generateCsvString = require('./generateCsvString')
 const countries = require('./countries')
 const validatePhone = require('./validatePhone')
 
-const corsOptions = {
-    origin: 'http://localhost:3000', 
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,  
-  };
-
 // Middlewares
 app.use(express.json())
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: (origin, callback) => {
+      const ACCEPTED_ORIGINS = [
+        'http://localhost:8080',
+        'http://localhost:3000',
+      ]
+  
+      if (ACCEPTED_ORIGINS.includes(origin)) {
+        return callback(null, true)
+      }
+  
+      if (!origin) {
+        return callback(null, true)
+      }
+  
+      return callback(new Error('Not allowed by CORS'))
+    }
+  }))
 
 app.disable('x-powered-by')
 
