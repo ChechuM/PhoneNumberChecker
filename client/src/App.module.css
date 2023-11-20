@@ -1,0 +1,6 @@
+.app {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}

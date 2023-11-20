@@ -1,0 +1,18 @@
+.input,
+.labels,
+.button {
+    display: flex;
+}
+
+.country,
+.button {
+    cursor: pointer;
+}
+
+.country{
+    margin-bottom: 1rem;
+}
+
+.phone {
+    margin-bottom: 1rem
+}
