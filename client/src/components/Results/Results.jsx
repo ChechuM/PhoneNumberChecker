@@ -1,15 +1,24 @@
 import style from './Results.module.css'
 
-export default function Results () {
-    return (
-        <div>
-            <h2>Results</h2>
-            <div><b>Is Valid:</b></div>
-            <div><b>Is Possible:</b></div>
-            <div><b>Phone Type:</b></div>
-            <div><b>International Format:</b></div>
+export default function Results ({results}) {
 
-            <button className={style.button}>Download CSV</button>
+    const isValid = results ? (results.isValid ? 'True' : 'False') : 'Wating ...';
+    const isPossible = results ? (results.isPossible ? 'True' : 'False') : 'Waiting ...';
+
+    return (
+        <div className={style.allresults}>
+            <div>
+                {results && (
+                <>
+                    <h2>Results</h2>
+                    <div><b>Is Valid:</b> {isValid}</div>
+                    <div><b>Is Possible:</b> {isPossible}</div>
+                    <div><b>Phone Type:</b> {results.type}</div>
+                    <div><b>International Format:</b> {results.intFormat}</div>
+                    <button className={style.button}>Download CSV</button>
+                </>
+                )}
+            </div>
         </div>
     )
 }

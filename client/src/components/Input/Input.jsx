@@ -1,24 +1,14 @@
-import { getCountries } from '../../handlers';
+import { getCountries, validatePhone } from '../../handlers';
 import style from './Input.module.css';
 import React, { useState, useEffect } from "react";
 
 export default function Input({setResults}) {
-    // const hardCountries = [
-    //     {
-    //         "name": "Argentina",
-    //         "code": "AR"
-    //     },
-    //     {
-    //         "name": "Australia",
-    //         "code": "AU"
-    //     },
-    //     {
-    //         "name": "Venezuela",
-    //         "code": "VE"
-    //     }
-    // ]
 
     const [countries, setCountries] = useState([]);
+    const [toValidate, setToValidate] = useState({
+        number: '',
+        code: ''
+    })
 
     useEffect(()=>{
         const fetchData = async () => {
@@ -37,16 +27,42 @@ export default function Input({setResults}) {
         fetchData();
     }, [])
 
-    const handleSubmit = () => {
-        // usa el handler importado para pedir los resultados y luego usa el setResults para cambiar el estado en App.js
-        
+    const handleSelectChange = (event) => {
+        const {value} = event.target;
+        setToValidate({
+            code: value
+        })
+    }
+
+    const handleInputChange = (event) => {
+        const {value} = event.target;
+        setToValidate({
+            ...toValidate,
+            number: value
+        })
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        console.log('el estado toValidate antes de submit', toValidate)
+        try {
+            const validated = await validatePhone(toValidate)
+            if(!validated) {
+                throw new Error('Error validating phone number when submitting')
+            }
+            
+            setResults(validated)
+        }
+        catch(error) {
+            console.error('Error validating phone number', error)
+        }
     }
 
     return (
         <div className={style.input}>
-            <form> 
+            <form onSubmit={handleSubmit}> 
                <label className={style.labels}> Country </label>
-                <select name='country' className={style.country} onChange={(e)=> console.log('touched target', e.target, 'y value:', e.value)}>
+                <select name='country' className={style.country} onChange={handleSelectChange}>
                 <option value="" key="first" hidden> Select one of the supported countries</option>
                 {
                 countries.map((country,i) => (
@@ -56,13 +72,11 @@ export default function Input({setResults}) {
                 </select>
                 <span>  </span>
                 <label className={style.labels}> Phone Number </label>
-                <input type="number" className={style.phone}/> 
+                <input type="number" className={style.phone} onChange={handleInputChange} placeholder='0411 00 00' name='number'/> 
                 <span>  </span>
 
-                <button className={style.button}> Verify </button>
+                <button className={style.button} onClick={handleSubmit}> Verify </button>
             </form>
-            
-
         </div>
     )
 }
