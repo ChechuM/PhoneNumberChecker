@@ -47,7 +47,9 @@ app.post('/phone', (req, res) => {
 })
 
 
+
 app.get('/download/:isValid/:isPossible/:type/:intFormat', (req, res) => {
+   
     const csvString = generateCsvString(req.params)
 
     res.setHeader('Content-Type', 'text/csv');
