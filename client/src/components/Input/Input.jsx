@@ -44,7 +44,7 @@ export default function Input({setResults}) {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log('el estado toValidate antes de submit', toValidate)
+
         try {
             const validated = await validatePhone(toValidate)
             if(!validated) {
