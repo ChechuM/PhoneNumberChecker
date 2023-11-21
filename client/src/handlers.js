@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { saveAs } from 'file-saver';
 
 // Una para buscar la info de los países soportados
 export const getCountries = async () => {
@@ -28,25 +29,45 @@ export const validatePhone = async ({number, code}) => {
 
 // Una para download el file CSV
 
-export const downloadCSVfile = async ({isValid,isPossible,type,intFormat}) => {
+
+
+export const downloadCSVfile = async ({ isValid, isPossible, type, intFormat }) => {
     try {
-        let response = await axios({
-            method: 'get',
-            url: `http://localhost:3001/download/${isValid}/${isPossible}/${type}/${intFormat}`,
-            responseType: 'blob'
-        })
-        const blob = new Blob([response.data], { type: 'text/csv' });
-
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'downloaded_file.csv';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        return response.data
+      const response = await axios({
+        method: 'get',
+        url: `http://localhost:3001/download/${isValid}/${isPossible}/${type}/${intFormat}`,
+        responseType: 'blob',
+      });
+  
+      const blob = new Blob([response.data], { type: 'text/csv' });
+  
+      saveAs(blob, 'downloaded_file.csv');
+  
+      return response.data;
+    } catch (error) {
+      console.error('Error creating CSV file at the handler', error);
     }
-    catch (error) {
-        console.error('Error creating CSV file at the handler', error)
-    }
-}
+  };
+  
+
+
+// export const downloadCSVfile = async ({isValid,isPossible,type,intFormat}) => {
+//     try {
+//         const response = await axios.get(`http://localhost:3001/download/${isValid}/${isPossible}/${type}/${intFormat}`, {
+//             responseType: 'blob',
+//         });
+//         const blob = new Blob([response.data], { type: 'text/csv' });
+
+//         const link = document.createElement('a');
+//         link.href = window.URL.createObjectURL(blob);
+//         link.download = 'downloaded_file.csv';
+//         document.body.appendChild(link);
+//         link.click();
+//         document.body.removeChild(link);
+
+//         return response.data
+//     }
+//     catch (error) {
+//         console.error('Error creating CSV file at the handler', error)
+//     }
+// }

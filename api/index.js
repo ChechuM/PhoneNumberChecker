@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const generateCsvString = require('./generateCsvString')
+const generateCsvFile = require('./generateCsvFile');
 const countries = require('./countries')
 const validatePhone = require('./validatePhone')
+const fs = require('fs').promises;
+const path = require('path');
+
 
 // Middlewares
 app.use(express.json())
@@ -48,13 +51,34 @@ app.post('/phone', (req, res) => {
 
 
 
-app.get('/download/:isValid/:isPossible/:type/:intFormat', (req, res) => {
-   
-    const csvString = generateCsvString(req.params)
+app.get('/download/:isValid/:isPossible/:type/:intFormat', async (req, res) => {
+   try {
+    await generateCsvFile(req.params)
 
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename=validation_results.csv');
-    res.status(200).send(csvString);
+    const filePath = path.join(__dirname, 'toDownload', 'validation_results.csv');
+
+    const fileExists = await fs.access(filePath)
+        .then(() => true)
+        .catch(() => false);
+
+    if (fileExists) {
+      const fileContent = await fs.readFile(filePath, 'utf-8');
+
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader('Content-Disposition', 'attachment; filename=validation_results.csv');
+      res.status(200).send(fileContent);
+    } else {
+      console.error('File does not exist:', filePath);
+      res.status(404).send('File Not Found');
+    }
+    
+    // to delete file after sending it:
+    await fs.unlink(filePath);
+   }
+   catch (error) {
+    console.error('Error generating csvfile at the back', error)
+    res.status(500).send('Internal Server Error');
+   }
 })
 
 // Listening - port
