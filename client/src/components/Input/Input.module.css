@@ -16,3 +16,7 @@
 .phone {
     margin-bottom: 1rem
 }
+
+.warning {
+    color: red;
+}

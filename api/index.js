@@ -61,6 +61,7 @@ app.post('/phone', (req, res) => {
   }
   catch(error) {
     console.error('Error posting the phone to validate', error)
+    return error
   }    
 })
 
