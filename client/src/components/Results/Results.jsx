@@ -23,10 +23,10 @@ export default function Results ({results}) {
                 {results && (
                 <>
                     <h2>Results</h2>
-                    <div><b>Is Valid:</b> {isValid}</div>
-                    <div><b>Is Possible:</b> {isPossible}</div>
-                    <div><b>Phone Type:</b> {results.type}</div>
-                    <div><b>International Format:</b> {results.intFormat}</div>
+                    <div className={style.titles}><b>Is Valid:</b> {isValid}</div>
+                    <div className={style.titles}><b>Is Possible:</b> {isPossible}</div>
+                    <div className={style.titles}><b>Phone Type:</b> {results.type}</div>
+                    <div className={style.titles}><b>International Format:</b> {results.intFormat}</div>
                     {
                         results.isValid && (
                             <button className={style.button} onClick={()=>handleDownload()}>Download CSV</button>

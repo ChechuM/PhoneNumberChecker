@@ -1,9 +1,24 @@
 .allresults {
     display: flex;
+    width: 24rem;
+    height: 15rem;
+    margin-top: -3rem;
+}
+
+.titles {
+    font-size: 18px;
+    margin-bottom: 2px;
 }
 
 .button {
     display: flex;
     cursor: pointer;
     margin-top: 1rem;
+    background-color: #3868C8;
+    border-radius: 5px;
+    font-size: 17px;
+    border: none;
+    padding: 4px;
+    width: 20rem;
+    justify-content: center;
 }

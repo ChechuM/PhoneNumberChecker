@@ -78,11 +78,10 @@ export default function Input({setResults}) {
             
                 setResults(validated)
                 document.getElementById('phoneInput').value = ''
-                // document.getElementById('countrySelect').value = ''
                 setToValidate({
                     number: '',
                     code: ''
-                })
+                });
             }
             else {
                 setErrors(errors);
@@ -98,8 +97,8 @@ export default function Input({setResults}) {
         <div className={style.input}>
             <form onSubmit={handleSubmit}> 
                <label className={style.labels}> Country </label>
-                <select name='country' className={style.country} onChange={handleSelectChange}>
-                <option value="" key="first" id='countrySelect' hidden> Select one of the supported countries</option>
+                <select name='country' className={style.country} onChange={handleSelectChange} value={toValidate.code}>
+                <option value="" key="first" hidden> Select one of the supported countries</option>
                 {
                 countries.map((country,i) => (
                     <option value={country.code} key={i}>{country.name}</option>
@@ -120,7 +119,6 @@ export default function Input({setResults}) {
                 {
                     toValidate.number && !errors.code && !errors.number && <button className={style.button} onClick={handleSubmit}> Verify </button>
                 }
-
             </form>
         </div>
     )
