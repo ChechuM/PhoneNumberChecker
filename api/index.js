@@ -34,19 +34,34 @@ app.disable('x-powered-by')
 // Routes
 
 app.get('/countries', (req, res) => {
+  if (countries && countries.length > 3) {
     res.status(200).json(countries)
+  }
+  else {
+    res.status(500).json({message: 'Could not find the list of supported countries'})
+  }
 })
 
 
 app.post('/phone', (req, res) => {
-    const result = validatePhone(req.body)
-
-    if (!result) {
-        res.status(400).json({message: "Oops"})
+  try {
+    const {number, code} = req.body
+    if (typeof number !== 'string' || typeof code !== 'string') {
+      res.status(400).json({message: 'Phone number and Country code must be a string'})
     }
-
-    res.status(200).json(result)
-    
+    else {
+      const result = validatePhone(req.body)
+  
+      if (!result) {
+          res.status(400).json({message: 'Error validating phone number'})
+      }
+  
+      res.status(200).json(result)
+    }
+  }
+  catch(error) {
+    console.error('Error posting the phone to validate', error)
+  }    
 })
 
 

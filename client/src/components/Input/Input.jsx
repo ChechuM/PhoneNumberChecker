@@ -52,6 +52,7 @@ export default function Input({setResults}) {
             }
             
             setResults(validated)
+            document.getElementById('phoneInput').value = ''
         }
         catch(error) {
             console.error('Error validating phone number', error)
@@ -72,7 +73,7 @@ export default function Input({setResults}) {
                 </select>
                 <span>  </span>
                 <label className={style.labels}> Phone Number </label>
-                <input type="number" className={style.phone} onChange={handleInputChange} placeholder='0411 00 00' name='number'/> 
+                <input type="number" className={style.phone} onChange={handleInputChange} placeholder='0411 00 00' name='number' id='phoneInput'/> 
                 <span>  </span>
 
                 <button className={style.button} onClick={handleSubmit}> Verify </button>

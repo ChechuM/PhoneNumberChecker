@@ -27,7 +27,11 @@ export default function Results ({results}) {
                     <div><b>Is Possible:</b> {isPossible}</div>
                     <div><b>Phone Type:</b> {results.type}</div>
                     <div><b>International Format:</b> {results.intFormat}</div>
-                    <button className={style.button} onClick={()=>handleDownload()}>Download CSV</button>
+                    {
+                        results.isValid && (
+                            <button className={style.button} onClick={()=>handleDownload()}>Download CSV</button>
+                        )
+                    }
                 </>
                 )}
             </div>
