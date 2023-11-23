@@ -4,7 +4,9 @@ import React, { useState, useEffect } from "react";
 
 function checkErrors ({number, code}) {
     let errors = {};
-    if (!number || number.length < 3) errors.number = 'Number must be bigger than 3 digits';
+    let positiveNumber = number.replace(/^0+/, '')
+    if (!number || number.length < 3) errors.number = 'Number must have more than 3 digits';
+    if (!/^\d+$/.test(positiveNumber)) errors.number = 'Number can not be negative'
     if (!code) errors.code = 'Please select a country from the list';
 
     return errors;
@@ -109,7 +111,7 @@ export default function Input({setResults}) {
                     errors.code && <p className={style.warning}>{errors.code}</p>
                 }
                 <span>  </span>
-                <label className={style.labels}> Phone Number </label>
+                <label className={style.labels}> Phone Number <span className={style.smaller}> (Skip country code)</span></label>
                 <input type="number" className={style.phone} onChange={handleInputChange} placeholder='0411 00 00' name='number' id='phoneInput' value={toValidate.number}/> 
                 <span>  </span>
                 {
