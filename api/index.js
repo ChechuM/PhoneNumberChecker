@@ -7,15 +7,11 @@ const validatePhone = require('./validatePhone')
 const fs = require('fs').promises;
 const path = require('path');
 
-
+const ACCEPTED_ORIGINS = process.env.ACCEPTED_ORIGINS 
 // Middlewares
 app.use(express.json())
 app.use(cors({
     origin: (origin, callback) => {
-      const ACCEPTED_ORIGINS = [
-        'http://localhost:8080',
-        'http://localhost:3000',
-      ]
   
       if (ACCEPTED_ORIGINS.includes(origin)) {
         return callback(null, true)
