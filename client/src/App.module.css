@@ -1,7 +1,15 @@
-.app {
+.total {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.base {
   display: flex;
   justify-content: space-around;
   align-content: center;
   align-items: center;
-  padding: 5rem;
+  padding-top: 2rem;
+  margin: auto;
 }

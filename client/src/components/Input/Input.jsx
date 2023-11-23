@@ -42,6 +42,7 @@ export default function Input({setResults}) {
     const handleSelectChange = (event) => {
         const {value} = event.target;
         setToValidate({
+            number:toValidate.number,
             code: value
         })
         setErrors(
@@ -77,7 +78,6 @@ export default function Input({setResults}) {
                 }
             
                 setResults(validated)
-                document.getElementById('phoneInput').value = ''
                 setToValidate({
                     number: '',
                     code: ''
@@ -110,15 +110,16 @@ export default function Input({setResults}) {
                 }
                 <span>  </span>
                 <label className={style.labels}> Phone Number </label>
-                <input type="number" className={style.phone} onChange={handleInputChange} placeholder='0411 00 00' name='number' id='phoneInput'/> 
+                <input type="number" className={style.phone} onChange={handleInputChange} placeholder='0411 00 00' name='number' id='phoneInput' value={toValidate.number}/> 
                 <span>  </span>
                 {
                     errors.number && <p className={style.warning}>{errors.number}</p>
                 }
 
-                {
+                {/* {
                     toValidate.number && !errors.code && !errors.number && <button className={style.button} onClick={handleSubmit}> Verify </button>
-                }
+                } */}
+                <button disabled={!toValidate.number || errors.code || errors.number} className={style.button} onClick={handleSubmit}> Verify </button>
             </form>
         </div>
     )

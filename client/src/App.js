@@ -7,9 +7,12 @@ function App() {
   const [results, setResults] = useState()
 
   return (
-    <div className={style.app}>
-      <Input setResults={setResults}/>
-      <Results results={results}/>
+    <div className={style.total}>
+      <h1 className={style.title}>Phone Number Checker</h1>
+      <div className={style.base}>
+        <Input setResults={setResults}/>
+        <Results results={results}/>
+      </div>
     </div>
   );
 }
